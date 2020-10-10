@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"> Lista Nomina</h4>
+          <div class="text-right">
+            <input type="button" class="btn btn-info" value="Agregar Nomina" [routerLink]="['/table']">
+          </div>
+          <div  class="col-md-12 text-left">
+            <label>Buscar Nomina</label>
+            <input type="text" placeholder="Buscar" class="form-control"  [(ngModel)]="search"  #buscar="ngModel" name="buscar" >
+            <input type="submit" class="btn btn-warning" value="Buscar" (click)="getsearch(search)">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary thead-light">
+                <th> Nombre Empleado</th>
+                <th class="text-left"> Sueldo Bruto</th>
+                <th class="text-left"> Retencion AFP</th>
+                 <th class="text-left"> Retencion ARS</th>
+                 <th class="text-left">Retencion ISR</th>
+                 <th class="text-left">Sueldo Imponible</th>
+                 <th class="text-left">Total Retencion</th>
+                 <th class="text-left">Sueldo Neto</th>
+                 <th>Estatus</th>
+                 <th>Fecha Creacion</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let nom of nomina">
+                  <td>{{nom.empleados.nombre}} {{nom.empleados.apellido}} </td>
+                  <td class="text-left">{{nom.sueldoBruto | number:'1.2-2'}}</td>
+                  <td class="text-left">{{nom.retencionAFP | number:'1.2-2'}}</td>
+                  <td class="text-left">{{nom.retencionARS | number:'1.2-2'}}</td>
+                  <td class="text-left">{{nom.retencionISR | number:'1.2-2'}}</td>
+                  <td class="text-left">{{nom.sueldoImponible | number:'1.2-2'}}</td>
+                  <td class="text-left">{{nom.totalRetencion | number:'1.2-2'}}</td>
+                  <td class="text-left">{{nom.sueldoNeto | number:'1.2-2'}}</td>
+                  <td>{{nom.activo == "1" ? "Activo": "Inactivo"}}</td>
+                  <td class="text-left">{{nom.fechaCreacion | date:'short' }}</td>
+
+                <td>
+                    <!-- <input type="button" class="btn btn-warning" value="Editar" (click)="" > | -->
+                    <!-- <input type="button" class="btn btn-danger" value="Eliminar" > |
+                    <input type="button" class="btn btn-success" value="Nomina" > -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

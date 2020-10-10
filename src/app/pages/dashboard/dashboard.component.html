@@ -1,0 +1,67 @@
+
+  <div class="main-content">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">Agregar Empleado</h5>
+        </div>
+        <div class="card-body">
+          <form #empadd="ngForm" autocomplete="off" (submit)=addEmploye(empadd)>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]='objEmp.nombre' #nombre="ngModel" name="nombre">
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Apellido</label>
+                  <input type="text" class="form-control" placeholder="Apellido" [(ngModel)]="objEmp.apellido" #apellido="ngModel" name="apellido">
+                </div>
+              </div>
+            </div>            
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Sexo</label>
+                  <select name="sexo" id="sexo" class="form-control"  [(ngModel)]="objEmp.sexo" #sexo="ngModel" name="sexo">
+                    <option value="" selected>--Seleccione--</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Sueldo Bruto</label>
+                  <input type="text" class="form-control" placeholder="Sueldo Bruto" [(ngModel)]="objEmp.sueldoBruto" #sueldoBruto="ngModel" name="sueldoBruto">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Activo</label>
+                  <select name="activo" id="activo" class="form-control" [(ngModel)]="objEmp.activo" #activo="ngModel" name="activo">
+                    <option value="" selected>--Seleccione--</option>
+                    <option value="true">Si</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="update ml-auto mr-auto">
+                <button type="submit" class="btn btn-primary btn-round" >Agregar</button>              
+                <button type="submit" class="btn btn-danger btn-round">Cancelar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

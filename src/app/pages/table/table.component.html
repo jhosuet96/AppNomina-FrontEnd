@@ -1,0 +1,312 @@
+<div class="row">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">
+        <form #employeeRA="ngForm" autocomplete="off" (submit)="getAllEmpleados(contentERA,employeeRA)">
+        <h4 class="card-title"> Lista Empleados Activos</h4>
+        <div class="text-right">
+          <button type="button" class="btn btn-info "  value="Agregar" [routerLink]="['/dashboard']"> Agregar</button>          
+          <p class="text-left"><b><a href="https://localhost:44319/api/Employee/EreportPdf?activo=true" target="iframe_a" (click)="EgetReport(contentERA,employeeRA)" >Generar Reporte</a></b></p>
+        </div>
+        </form>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary thead-light">
+              <th> Nombre</th>
+              <th> Apellido</th>
+              <th> Sexo</th>
+              <th class="text-left"> SueldoBruto</th> 
+               <th > Estatus</th>
+               <th>Opciones</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of employee.empleadoA">
+                <td>{{emp.nombre}}</td>
+                <td>{{emp.apellido}}</td>
+                <td>{{emp.sexo}}</td>
+                <td class="text-left">{{emp.sueldoBruto}}</td>
+                <td >{{emp.activo == "1" ? "Activo": "Inactivo"}}</td>
+                <td>
+                  <button type="button" class="btn btn-warning" value="Editar"  (click)="openLgEmp(contentEmp, emp.id)">Editar</button> |
+                  <input type="button" class="btn btn-danger" value="Inactivar" (click)="delete(emp.id)"> 
+                  <!-- <input type="button" class="btn btn-success" [disabled]="review_btn" value="Nomina" (click)="openLg(content, emp.id)">  -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #contentERA let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Reporte</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <iframe src="https://localhost:44319/api/Employee/EreportPdf?activo=true" name="iframe_a" height="500" width="750" title="Iframe Example"></iframe>  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+
+<div class="row">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">
+        <form #employeeRI="ngForm" autocomplete="off" (submit)="getAllEmpleados(contentERA,employeeRI)">
+
+        <h4 class="card-title"> Lista Empleados Inactivos</h4>
+        <div class="text-right">
+          <!-- <input type="button" class="btn btn-info" value="Agregar Empleado" [routerLink]="['/dashboard']"> -->
+          <p class="text-left"><b><a href="https://localhost:44319/api/Employee/EreportPdf?activo=false" target="iframe_a"  style="color:coral" (click)="EgetReport(contentERI,employeeRI)" >Generar Reporte</a></b></p>
+
+        </div>
+        </form>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table ">
+            <thead class=" text-primary thead-dark">
+              <th> Nombre</th>
+              <th> Apellido</th>
+              <th> Sexo</th>
+              <th class="text-left"> SueldoBruto</th> 
+               <th> Estatus</th>
+               <th>Opciones</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of employee.empleadoI">
+                <td>{{emp.nombre}}</td>
+                <td>{{emp.apellido}}</td>
+                <td>{{emp.sexo}}</td>
+                <td class="text-left">{{emp.sueldoBruto}}</td>
+                <td>{{emp.activo == "1" ? "Activo": "Inactivo"}}</td>
+                <td>
+                  <!-- <input type="button" class="btn btn-warning" value="Editar"  (click)="openLgEmp(contentEmp, emp.id)"> | -->
+                  <input type="button" class="btn btn-danger" value="Activar" (click)="delete(emp.id)"> 
+                  <!-- <input type="button" class="btn btn-success" value="Nomina" (click)="openLg(content, emp.id)">  -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #contentERI let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Reporte</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <iframe src="https://localhost:44319/api/Employee/EreportPdf?activo=false" name="iframe_a" height="500" width="750" title="Iframe Example"></iframe>  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Agregar Nomina</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #nominaAdd="ngForm" autocomplete="off" (submit)="saveNomina(nominaAdd)">
+      <div class="main-content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Empleado - {{data.employee.nombre}} {{data.employee.apellido}} </h5>
+              </div>
+              <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4 pr-1">
+
+                      <input type="number" type="hidden" class="form-control" placeholder="empleadoID" [(ngModel)]='data._nomina.empleadoID' #empleadoID="ngModel" name="empleadoID">
+                      <input type="number" type="hidden" class="form-control" placeholder="retencionIsrId" [(ngModel)]='data._nomina.retencionIsrId' #retencionIsrId="ngModel" name="retencionIsrId">
+
+                      <div class="form-group">
+                        <label>Sueldo Bruto</label>
+                        <input type="number" class="form-control" placeholder="sueldoBruto"  [(ngModel)]='data._nomina.sueldoBruto' #sueldoBruto="ngModel" name="sueldoBruto">
+                        <!-- <input type="number" class="form-control" placeholder="sueldoBruto" [(ngModel)]='objEmp.sueldoBruto' #sueldoBruto="ngModel" name="sueldoBruto"> -->
+                      </div>
+                    </div>
+                    <div class="col-md-4 px-1">
+                      <div class="form-group">
+                        <label>RetencionAFP 2.87%</label>
+                        <input type="number" class="form-control" placeholder="RetencionAFP" [(ngModel)]='data._nomina.retencionAFP' #retencionAFP="ngModel" name="retencionAFP">
+                      </div>
+                    </div>
+                    <div class="col-md-4 pl-1">
+                      <div class="form-group">
+                        <label>RetencionARS 3.04%</label>
+                        <input type="number" class="form-control" placeholder="RetencionARS" [(ngModel)]='data._nomina.retencionARS' #retencionARS="ngModel" name="retencionARS">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label>Sueldo Imponible</label>
+                        <input type="number" class="form-control" placeholder="Sueldo Imponible" [(ngModel)]='data._nomina.sueldoImponible' #sueldoImponible="ngModel" name="sueldoImponible">
+                      </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+                      <div class="form-group">
+                        <label>RetencionISR</label>
+                        <input type="number" class="form-control" placeholder="RetencionISR" [(ngModel)]='data._nomina.retencionISR' #retencionISR="ngModel" name="retencionISR">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label>Total Retencion</label>
+                        <input type="number" class="form-control" placeholder="Total Retencion" [(ngModel)]='data._nomina.totalRetencion' #totalRetencion="ngModel" name="totalRetencion">
+                      </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+                      <div class="form-group">
+                        <label>Sueldo Neto</label>
+                        <input type="number" class="form-control" placeholder="Sueldo Neto" [(ngModel)]='data._nomina.sueldoNeto' #sueldoNeto="ngModel" name="sueldoNeto">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label>Activo</label>
+                        <select name="Activo" id="Activo" class="form-control" [(ngModel)]='data._nomina.activo' #activo="ngModel" name="activo">
+                          <option value="" selected>--Seleccione--</option>
+                          <option value="true">Si</option>
+                          <option value="false">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 pl-1">
+                    <div class="form-group">
+                      <label>Fecha Creacion</label>
+                      <input type="date" class="form-control" [(ngModel)]='data._nomina.fechaCreacion' #fechaCreacion="ngModel" name="fechaCreacion">
+                    </div>
+                  </div>
+                  <input type="submit" class="btn"  value="Agregar" />
+                  <input type="button" class="btn btn-danger" value="Cancelar"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+
+
+<ng-template #contentEmp let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Editar Empleado</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #employeeEdit="ngForm" autocomplete="off" (submit)="editEmployee(employeeEdit)">
+      <div class="main-content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Editar Empleado - {{data.employee.nombre}} {{data.employee.apellido}} </h5> 
+              </div>
+              <div class="card-body">
+                 
+                <div class="row">
+                  <div class="col-md-4 pl-1">
+                    <div class="form-group">
+                      <label>Nombre</label>
+                      <!-- <input type="text" class="form-control" placeholder="Nombre" > -->
+                      <input type="text" type ="hidden" class="form-control" placeholder="Id" [(ngModel)]='data.employee.id' #id="ngModel" name="id">
+                      <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]='data.employee.nombre' #nombre="ngModel" name="nombre">
+                    </div>
+                  </div>
+                  <div class="col-md-4 pl-1">
+                    <div class="form-group">
+                      <label>Apellido</label>
+                      <!-- <input type="text" class="form-control" placeholder="apellido"> -->
+                      <input type="text" class="form-control" placeholder="apellido" [(ngModel)]='data.employee.apellido' #apellido="ngModel" name="apellido">
+                    </div>
+                  </div>
+                  <div class="col-md-4 pl-1">
+                    <div class="form-group">
+                      <label>Sueldo Bruto</label>
+                      <!-- <input type="number" class="form-control" placeholder="SueldoBruto"> -->
+                      <input type="number" class="form-control" placeholder="SueldoBruto" [(ngModel)]='data.employee.sueldoBruto' #sueldoBruto="ngModel" name="sueldoBruto">
+                    </div>
+                  </div>
+                </div>
+                  
+                <div class="row">
+                  <div class="col-md-6 pl-1">
+                    <div class="form-group">
+                      <label>Activo</label>
+                      <select name="Activo" id="Activo" class="form-control"  [(ngModel)]='data.employee.activo' #activo="ngModel" name="activo">
+                        <option value="" selected>--Seleccione--</option>
+                        <option value="true">Si</option>
+                        <option value="false">No</option>
+                      </select>
+                    </div>
+                  </div><div class="col-md-6 pl-1">
+                    <div class="form-group">
+                      <label>Sexo</label>
+                      <select name="sexo" id="sexo" class="form-control"  [(ngModel)]='data.employee.sexo' #sexo="ngModel" name="sexo">
+                        <option value="" selected>--Seleccione--</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="femenino">Femenino</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="update ml-auto mr-auto">
+                    <input type="submit" class="btn btn-info"  value="Guardar" />
+                    <input type="button" class="btn btn-danger" value="Cancelar"/>
+                  </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+
+
+
